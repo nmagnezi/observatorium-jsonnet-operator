@@ -38,8 +38,8 @@ type ObservatoriumReconciler struct {
 
 func (r *ObservatoriumReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	_ = context.Background()
-	_ = r.Log.WithValues("observatorium", req.NamespacedName)
-
+	log := r.Log.WithValues("observatorium", req.NamespacedName)
+	log.Info("TEST TEST TEST")
 	// your logic here
 
 	return ctrl.Result{}, nil

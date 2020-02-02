@@ -16,19 +16,88 @@ limitations under the License.
 package v1alpha1
 
 import (
+	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
-
 // ObservatoriumSpec defines the desired state of Observatorium
 type ObservatoriumSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	// Thanos Spec
+	Thanos ThanosSpec `json:"thanos"`
+}
 
-	// Foo is an example field of Observatorium. Edit Observatorium_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+type ReceiveController struct {
+	Replicas *int32 `json:"replicas,omitempty"`
+	// Thanos receive controller Image name
+	Image *string `json:"image"`
+	// Tag describes the tag of Thanos receive controller to use.
+	Tag *string `json:"tag,omitempty"`
+	// Hashrings describes a list of Hashrings
+	Hashrings []*Hashring `json:"hashrings,omitempty"`
+	// Resources for component pods
+	Resources v1.ResourceRequirements `json:"resources,omitempty"`
+}
+
+type ThanosPersistentSpec struct {
+	Replicas *int32 `json:"replicas,omitempty"`
+	// Resources for component pods
+	Resources v1.ResourceRequirements `json:"resources,omitempty"`
+	// Receive Storage Class
+	StorageClass *string `json:"storageClass"`
+	// Receive PVC size
+	PVCSize *string `json:"pvcSize"`
+}
+
+type QuerierCacheSpec struct {
+	// Thanos receive controller Image name
+	Image *string `json:"image"`
+	// ConfigMap describes the Configuration of Querier Cache.
+	ConfigMap *string `json:"config-map"`
+	// Number of Querier Cache replicas.
+	Replicas *int32 `json:"replicas,omitempty"`
+	// Resources for Receive pods
+	Resources v1.ResourceRequirements `json:"resources,omitempty"`
+	// Receive Storage Class
+}
+
+type ThanosComponentSpec struct {
+	Replicas *int32 `json:"replicas,omitempty"`
+	// Resources for component pods
+	Resources v1.ResourceRequirements `json:"resources,omitempty"`
+}
+
+type Hashring struct {
+	// Thanos Hashring name
+	Name *string `json:"name"`
+	// Tenants describes a lists of tenants.
+	Tenants []*string `json:"tenants,omitempty"`
+}
+
+type ThanosSpec struct {
+	// Thanos Image name
+	Image *string `json:"image"`
+	// Tag of Thanos sidecar container image to be deployed.
+	Tag *string `json:"tag,omitempty"`
+	// Thanos Receive Controller Spec
+	ReceiveControllerSpec ReceiveController `json:"receiveController"`
+	// Thanos ThanosPersistentSpec
+	Receive ThanosPersistentSpec `json:"receive"`
+	// Thanos QuerierSpec
+	Querier ThanosComponentSpec `json:"querier"`
+	// Thanos QuerierCache
+	QuerierCache QuerierCacheSpec `json:"querier-cache"`
+	// Thanos StoreSpec
+	Store ThanosPersistentSpec `json:"store"`
+	// Thanos CompactorSpec
+	Compactor ThanosComponentSpec `json:"compactor"`
+	// Thanos RulerSpec
+	Ruler ThanosComponentSpec `json:"ruler"`
+	// Object Store Config Secret for Thanos
+	ObjectStoreConfigSecret *string `json:"objectStoreConfigSecret"`
+	// TODO: AWS secrets?
+	// TODO: handle with THANOS_QUERIER_SVC_URL
+	// TODO: Do we need a THANOS_RULER?
+	// TODO: JAEGER
 }
 
 // ObservatoriumStatus defines the observed state of Observatorium
