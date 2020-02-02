@@ -1,3 +1,7 @@
 domain: observatorium.io
 repo: github.com/observatorium-jsonnet-operator
+resources:
+- group: obs-api
+  kind: Observatorium
+  version: v1alpha1
 version: "2"
