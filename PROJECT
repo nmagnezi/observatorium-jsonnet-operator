@@ -1,0 +1,3 @@
+domain: observatorium.io
+repo: github.com/observatorium-jsonnet-operator
+version: "2"
