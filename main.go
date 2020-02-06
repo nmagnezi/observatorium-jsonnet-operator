@@ -19,8 +19,8 @@ import (
 	"flag"
 	"os"
 
-	obsapiv1alpha1 "github.com/observatorium-jsonnet-operator/api/v1alpha1"
-	"github.com/observatorium-jsonnet-operator/controllers"
+	obsapiv1alpha1 "github.com/nmagnezi/observatorium-jsonnet-operator/api/v1alpha1"
+	"github.com/nmagnezi/observatorium-jsonnet-operator/controllers"
 	"k8s.io/apimachinery/pkg/runtime"
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
 	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
