@@ -38,7 +38,7 @@
           "subdir": "jsonnet/kube-thanos"
         }
       },
-      "version": "refactor"
+      "version": "master"
     },
     {
       "name": "observatorium",
@@ -88,7 +88,7 @@
           "subdir": "jsonnet/lib"
         }
       },
-      "version": "refactor"
+      "version": "master"
     },
     {
       "name": "thanos-receive-controller-mixin",

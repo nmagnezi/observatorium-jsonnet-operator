@@ -13,8 +13,13 @@ RUN go mod download
 COPY main.go main.go
 COPY api/ api/
 COPY controllers/ controllers/
+COPY jsonnet/ jsonnet/
+COPY components/ components/
+COPY jsonnetfile.json jsonnetfile.json
 
 # Build
+RUN GO111MODULE="on" go get github.com/jsonnet-bundler/jsonnet-bundler/cmd/jb
+RUN jb install
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO111MODULE=on go build -a -o manager main.go
 
 # Use distroless as minimal base image to package the manager binary
