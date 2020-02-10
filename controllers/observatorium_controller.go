@@ -83,7 +83,7 @@ func (r *ObservatoriumReconciler) Reconcile(req ctrl.Request) (ctrl.Result, erro
 		logLevel            = logLevelInfo
 		renderProviderName  = "jsonnet"
 		triggerProviderName = "oneoff"
-		configFile          = "jsonnet/main/default-config.libsonnet"
+		configFile          = ""
 		renderOnly          = false
 	)
 
