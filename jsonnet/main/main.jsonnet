@@ -5,8 +5,8 @@ local manifests = (import 'observatorium.jsonnet').manifests;
     [item]: manifests[item] for item in std.objectFields(manifests)
   },
   rollout: {
-   "apiVersion": "v1",
-   "kind": "ConfigMap",
+   "apiVersion": "workflow.kubernetes.io/v1alpha1",
+   "kind": "Rollout",
    "metadata": {
       "name": "jsonnet"
    },
