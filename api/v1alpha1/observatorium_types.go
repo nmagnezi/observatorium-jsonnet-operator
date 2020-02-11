@@ -76,8 +76,8 @@ type Hashring struct {
 type ThanosSpec struct {
 	// Thanos Image name
 	Image *string `json:"image"`
-	// Tag of Thanos sidecar container image to be deployed.
-	Tag *string `json:"tag,omitempty"`
+	// Version of Thanos sidecar container image to be deployed.
+	Version *string `json:"version,omitempty"`
 	// Thanos Receive Controller Spec
 	ReceiveControllerSpec ReceiveController `json:"receiveController"`
 	// Thanos ThanosPersistentSpec

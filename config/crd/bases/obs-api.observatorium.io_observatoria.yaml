@@ -279,8 +279,8 @@ spec:
                   - pvcSize
                   - storageClass
                   type: object
-                tag:
-                  description: Tag of Thanos sidecar container image to be deployed.
+                version:
+                  description: Version of Thanos sidecar container image to be deployed.
                   type: string
               required:
               - compactor
