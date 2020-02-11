@@ -74,8 +74,6 @@ type ThanosSpec struct {
 	ReceiveControllerSpec ReceiveController `json:"receiveController"`
 	// Thanos ThanosPersistentSpec
 	Receive ThanosPersistentSpec `json:"receive"`
-	// Thanos QuerierSpec
-	Querier ThanosComponentSpec `json:"querier"`
 	// Thanos QuerierCache
 	QueryCache QuerierCacheSpec `json:"queryCache"`
 	// Thanos StoreSpec
@@ -89,7 +87,6 @@ type ThanosSpec struct {
 	// Object Store Config key for Thanos
 	ObjectStoreConfigKey *string `json:"objectStoreConfigKey"`
 	// TODO: AWS secrets?
-	// TODO: handle with THANOS_QUERIER_SVC_URL
 	// TODO: Do we need a THANOS_RULER?
 	// TODO: JAEGER
 }
