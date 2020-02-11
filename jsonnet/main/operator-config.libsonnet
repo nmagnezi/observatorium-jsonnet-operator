@@ -1,12 +1,13 @@
+local config = import 'generic-operator/config';
 {
   local defaultConfig = self,
 
-  name: 'observatorium-xyz',
-  namespace: 'observatorium',
+  name: config.metadata.name,
+  namespace: config.metadata.namespace,
   thanosVersion: 'v0.9.0',
-  thanosImage: 'quay.io/thanos/thanos:' + defaultConfig.thanosVersion,
+  thanosImage: config.spec.thanos.image + defaultConfig.thanosVersion,
   objectStorageConfig: {
-    name: 'thanos-objectstorage',
+    name: config.spec.thanos.objectStoreConfigSecret,
     key: 'thanos.yaml',
   },
 

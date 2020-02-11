@@ -1,5 +1,3 @@
 (import '../../components/observatorium.libsonnet') + {
-  config+:: (import 'default-config.libsonnet'),
-} + {
-  config+:: (import 'generic-operator/config'),
+  config+:: (import 'operator-config.libsonnet'),
 } + (import '../../components/observatorium-configure.libsonnet')
