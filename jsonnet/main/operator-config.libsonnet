@@ -86,14 +86,7 @@ local config = import 'generic-operator/config';
     version: defaultConfig.thanosVersion,
     objectStorageConfig: defaultConfig.objectStorageConfig,
     volumeClaimTemplate: {
-      spec: {
-        accessModes: ['ReadWriteOnce'],
-        resources: {
-          requests: {
-            storage: '50Gi',
-          },
-        },
-      },
+      spec: config.spec.thanos.store.pvcSpec,
     },
   },
 

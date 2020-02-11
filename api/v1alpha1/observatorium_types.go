@@ -39,13 +39,8 @@ type ReceiveController struct {
 }
 
 type ThanosPersistentSpec struct {
-	Replicas *int32 `json:"replicas,omitempty"`
-	// Resources for component pods
-	Resources v1.ResourceRequirements `json:"resources,omitempty"`
-	// Receive Storage Class
-	StorageClass *string `json:"storageClass"`
-	// Receive PVC size
-	PVCSize *string `json:"pvcSize"`
+	// PVC Spec
+	PVCSpec v1.PersistentVolumeClaimSpec `json:"pvcSpec"`
 }
 
 type QuerierCacheSpec struct {
