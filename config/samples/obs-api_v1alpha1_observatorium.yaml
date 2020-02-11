@@ -6,6 +6,7 @@ spec:
   thanos:
     image: quay.io/thanos/thanos
     version: v0.9.0
+    objectStoreConfigKey: thanos.yaml
     objectStoreConfigSecret: thanos-objectstorage
     querier:
       replicas: 3
@@ -38,7 +39,7 @@ spec:
           memory: 128Mi
       storageClass: standard
       pvcSize: 50Gi
-    compactor:
+    compact:
       replicas: 1
       resources:
         limits:
@@ -75,10 +76,10 @@ spec:
           cpu: 64m
           memory: 128Mi
       hashrings:
-        - name: hashring0
+        - hashring: hashring0
           tenants:
             - foo
             - bar
-        - name: hashring1
+        - hashring: hashring1
           tenants:
             - baz

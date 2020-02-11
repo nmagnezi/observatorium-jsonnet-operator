@@ -8,7 +8,7 @@ local config = import 'generic-operator/config';
   thanosImage: config.spec.thanos.image + ':' + defaultConfig.thanosVersion,
   objectStorageConfig: {
     name: config.spec.thanos.objectStoreConfigSecret,
-    key: 'thanos.yaml',
+    key: config.spec.thanos.objectStoreConfigKey,
   },
 
   hashrings: [

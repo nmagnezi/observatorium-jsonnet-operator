@@ -287,10 +287,15 @@ func (in *ThanosSpec) DeepCopyInto(out *ThanosSpec) {
 	in.Querier.DeepCopyInto(&out.Querier)
 	in.QuerierCache.DeepCopyInto(&out.QuerierCache)
 	in.Store.DeepCopyInto(&out.Store)
-	in.Compactor.DeepCopyInto(&out.Compactor)
+	in.Compact.DeepCopyInto(&out.Compact)
 	in.Ruler.DeepCopyInto(&out.Ruler)
 	if in.ObjectStoreConfigSecret != nil {
 		in, out := &in.ObjectStoreConfigSecret, &out.ObjectStoreConfigSecret
+		*out = new(string)
+		**out = **in
+	}
+	if in.ObjectStoreConfigKey != nil {
+		in, out := &in.ObjectStoreConfigKey, &out.ObjectStoreConfigKey
 		*out = new(string)
 		**out = **in
 	}
