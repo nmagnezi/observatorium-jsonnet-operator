@@ -49,15 +49,12 @@ type ThanosPersistentSpec struct {
 }
 
 type QuerierCacheSpec struct {
-	// Thanos receive controller Image name
+	// Thanos Querier Cache  name
 	Image *string `json:"image"`
-	// ConfigMap describes the Configuration of Querier Cache.
-	ConfigMap *string `json:"config-map"`
 	// Number of Querier Cache replicas.
 	Replicas *int32 `json:"replicas,omitempty"`
-	// Resources for Receive pods
-	Resources v1.ResourceRequirements `json:"resources,omitempty"`
-	// Receive Storage Class
+	// Version of  Querier Cache image to be deployed.
+	Version *string `json:"version,omitempty"`
 }
 
 type ThanosComponentSpec struct {
@@ -85,7 +82,7 @@ type ThanosSpec struct {
 	// Thanos QuerierSpec
 	Querier ThanosComponentSpec `json:"querier"`
 	// Thanos QuerierCache
-	QuerierCache QuerierCacheSpec `json:"querier-cache"`
+	QueryCache QuerierCacheSpec `json:"queryCache"`
 	// Thanos StoreSpec
 	Store ThanosPersistentSpec `json:"store"`
 	// Thanos CompactSpec
