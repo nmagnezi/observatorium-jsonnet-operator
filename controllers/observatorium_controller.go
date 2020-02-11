@@ -23,6 +23,8 @@ import (
 	"os/signal"
 	"syscall"
 
+	"encoding/json"
+
 	"github.com/go-logr/logr"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -33,11 +35,9 @@ import (
 	"k8s.io/client-go/kubernetes"
 
 	lclient "github.com/brancz/locutus/client"
-	"github.com/brancz/locutus/config"
 	"github.com/brancz/locutus/render"
 	"github.com/brancz/locutus/rollout"
 	"github.com/brancz/locutus/rollout/checks"
-	"github.com/brancz/locutus/trigger"
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
 	"github.com/oklog/run"
@@ -77,28 +77,32 @@ var (
 func (r *ObservatoriumReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	_ = context.Background()
 	olog := r.Log.WithValues("observatorium", req.NamespacedName)
-	olog.Info("TEST TEST TEST")
+	olog.Info("Enter Reconcile")
+	ctx := context.Background()
+	var obs obsapiv1alpha1.Observatorium
+	if err := r.Get(ctx, req.NamespacedName, &obs); err != nil {
+		olog.Error(err, "unable to fetch Observatorium")
+		return ctrl.Result{}, client.IgnoreNotFound(err)
+	}
 
-	var (
-		logLevel            = logLevelInfo
-		renderProviderName  = "jsonnet"
-		triggerProviderName = "oneoff"
-		configFile          = ""
-		renderOnly          = false
-	)
+	var logLevel = logLevelInfo
 
 	renderers := render.Providers()
-	triggers := trigger.Providers()
 	args := []string{"--renderer.jsonnet.entrypoint=jsonnet/main/main.jsonnet"}
 
 	s := flag.NewFlagSet(os.Args[0], flag.ContinueOnError)
 	renderers.RegisterFlags(s)
-	triggers.RegisterFlags(s)
 	s.Parse(args)
 
 	logger, err := logger(logLevel)
 	if err != nil {
 		logger.Log("msg", "error creating logger", err)
+	}
+
+	cfgCrd, err := json.Marshal(obs)
+	if err != nil {
+		logger.Log("msg", "failed to Marshal CRD", "err", err)
+		return ctrl.Result{}, err
 	}
 
 	cfg := ctrl.GetConfigOrDie()
@@ -115,35 +119,25 @@ func (r *ObservatoriumReconciler) Reconcile(req ctrl.Request) (ctrl.Result, erro
 	}
 	cl.SetUpdatePreparations(lclient.DefaultUpdatePreparations)
 
-	renderProvider, err := renderers.Select(renderProviderName)
+	renderProvider, err := renderers.Select("jsonnet")
 	if err != nil {
 		logger.Log("msg", "failed to find render provider", "err", err)
 		return ctrl.Result{}, err
 	}
 
-	triggerProvider, err := triggers.Select(triggerProviderName)
-	if err != nil {
-		logger.Log("msg", "failed to find trigger provider", "err", err)
-		return ctrl.Result{}, err
-	}
-
-	trigger, err := triggerProvider.NewTrigger(logger, cl)
-	if err != nil {
-		logger.Log("msg", "failed to create trigger", "err", err)
-		return ctrl.Result{}, err
-	}
-
 	c := checks.NewSuccessChecks(logger, cl)
 	renderer := renderProvider.NewRenderer(logger)
-	runner := rollout.NewRunner(nil, log.With(logger, "component", "rollout-runner"), cl, renderer, c, renderOnly)
+	runner := rollout.NewRunner(nil, log.With(logger, "component", "rollout-runner"), cl, renderer, c, false)
 	runner.SetObjectActions(rollout.DefaultObjectActions)
-	trigger.Register(config.NewConfigPasser(configFile, runner))
 
 	g := run.Group{}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	g.Add(func() error {
-		return errors.Wrap(trigger.Run(ctx.Done()), "failed to run trigger")
+		return errors.Wrap(runner.Execute(&rollout.Config{
+			RawConfig: cfgCrd,
+			Feedback:  nil,
+		}), "failed to run Runner")
 	}, func(err error) {
 		cancel()
 	})
