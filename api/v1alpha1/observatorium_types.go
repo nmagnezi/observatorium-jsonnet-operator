@@ -68,7 +68,7 @@ type ThanosComponentSpec struct {
 
 type Hashring struct {
 	// Thanos Hashring name
-	Name *string `json:"name"`
+	Hashring *string `json:"hashring"`
 	// Tenants describes a lists of tenants.
 	Tenants []*string `json:"tenants,omitempty"`
 }
@@ -88,12 +88,14 @@ type ThanosSpec struct {
 	QuerierCache QuerierCacheSpec `json:"querier-cache"`
 	// Thanos StoreSpec
 	Store ThanosPersistentSpec `json:"store"`
-	// Thanos CompactorSpec
-	Compactor ThanosComponentSpec `json:"compactor"`
+	// Thanos CompactSpec
+	Compact ThanosComponentSpec `json:"compact"`
 	// Thanos RulerSpec
 	Ruler ThanosComponentSpec `json:"ruler"`
 	// Object Store Config Secret for Thanos
 	ObjectStoreConfigSecret *string `json:"objectStoreConfigSecret"`
+	// Object Store Config key for Thanos
+	ObjectStoreConfigKey *string `json:"objectStoreConfigKey"`
 	// TODO: AWS secrets?
 	// TODO: handle with THANOS_QUERIER_SVC_URL
 	// TODO: Do we need a THANOS_RULER?

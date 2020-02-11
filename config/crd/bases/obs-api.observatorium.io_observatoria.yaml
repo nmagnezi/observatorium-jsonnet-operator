@@ -37,8 +37,8 @@ spec:
             thanos:
               description: Thanos Spec
               properties:
-                compactor:
-                  description: Thanos CompactorSpec
+                compact:
+                  description: Thanos CompactSpec
                   properties:
                     replicas:
                       format: int32
@@ -65,6 +65,9 @@ spec:
                   type: object
                 image:
                   description: Thanos Image name
+                  type: string
+                objectStoreConfigKey:
+                  description: Object Store Config key for Thanos
                   type: string
                 objectStoreConfigSecret:
                   description: Object Store Config Secret for Thanos
@@ -174,7 +177,7 @@ spec:
                       description: Hashrings describes a list of Hashrings
                       items:
                         properties:
-                          name:
+                          hashring:
                             description: Thanos Hashring name
                             type: string
                           tenants:
@@ -183,7 +186,7 @@ spec:
                               type: string
                             type: array
                         required:
-                        - name
+                        - hashring
                         type: object
                       type: array
                     image:
@@ -283,8 +286,9 @@ spec:
                   description: Version of Thanos sidecar container image to be deployed.
                   type: string
               required:
-              - compactor
+              - compact
               - image
+              - objectStoreConfigKey
               - objectStoreConfigSecret
               - querier
               - querier-cache
