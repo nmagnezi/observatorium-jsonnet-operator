@@ -4,8 +4,8 @@ local config = import 'generic-operator/config';
 
   name: config.metadata.name,
   namespace: config.metadata.namespace,
-  thanosVersion: 'v0.9.0',
-  thanosImage: config.spec.thanos.image + defaultConfig.thanosVersion,
+  thanosVersion: config.spec.thanos.version,
+  thanosImage: config.spec.thanos.image + ':' + defaultConfig.thanosVersion,
   objectStorageConfig: {
     name: config.spec.thanos.objectStoreConfigSecret,
     key: 'thanos.yaml',

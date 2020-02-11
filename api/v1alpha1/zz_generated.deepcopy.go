@@ -277,8 +277,8 @@ func (in *ThanosSpec) DeepCopyInto(out *ThanosSpec) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.Tag != nil {
-		in, out := &in.Tag, &out.Tag
+	if in.Version != nil {
+		in, out := &in.Version, &out.Version
 		*out = new(string)
 		**out = **in
 	}
