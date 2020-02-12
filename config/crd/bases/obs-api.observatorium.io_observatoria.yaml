@@ -63,6 +63,22 @@ spec:
                           type: object
                       type: object
                   type: object
+                hashrings:
+                  description: Hashrings describes a list of Hashrings
+                  items:
+                    properties:
+                      hashring:
+                        description: Thanos Hashring name
+                        type: string
+                      tenants:
+                        description: Tenants describes a lists of tenants.
+                        items:
+                          type: string
+                        type: array
+                    required:
+                    - hashring
+                    type: object
+                  type: array
                 image:
                   description: Thanos Image name
                   type: string
@@ -135,7 +151,42 @@ spec:
                   - config-map
                   - image
                   type: object
-                receive:
+                receiveController:
+                  description: Thanos Receive Controller Spec
+                  properties:
+                    image:
+                      description: Thanos receive controller Image name
+                      type: string
+                    replicas:
+                      format: int32
+                      type: integer
+                    resources:
+                      description: Resources for component pods
+                      properties:
+                        limits:
+                          additionalProperties:
+                            type: string
+                          description: 'Limits describes the maximum amount of compute
+                            resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
+                          type: object
+                        requests:
+                          additionalProperties:
+                            type: string
+                          description: 'Requests describes the minimum amount of compute
+                            resources required. If Requests is omitted for a container,
+                            it defaults to Limits if that is explicitly specified,
+                            otherwise to an implementation-defined value. More info:
+                            https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
+                          type: object
+                      type: object
+                    tag:
+                      description: Tag describes the tag of Thanos receive controller
+                        to use.
+                      type: string
+                  required:
+                  - image
+                  type: object
+                receivers:
                   description: Thanos ThanosPersistentSpec
                   properties:
                     pvcSpec:
@@ -257,57 +308,6 @@ spec:
                       type: object
                   required:
                   - pvcSpec
-                  type: object
-                receiveController:
-                  description: Thanos Receive Controller Spec
-                  properties:
-                    hashrings:
-                      description: Hashrings describes a list of Hashrings
-                      items:
-                        properties:
-                          hashring:
-                            description: Thanos Hashring name
-                            type: string
-                          tenants:
-                            description: Tenants describes a lists of tenants.
-                            items:
-                              type: string
-                            type: array
-                        required:
-                        - hashring
-                        type: object
-                      type: array
-                    image:
-                      description: Thanos receive controller Image name
-                      type: string
-                    replicas:
-                      format: int32
-                      type: integer
-                    resources:
-                      description: Resources for component pods
-                      properties:
-                        limits:
-                          additionalProperties:
-                            type: string
-                          description: 'Limits describes the maximum amount of compute
-                            resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
-                          type: object
-                        requests:
-                          additionalProperties:
-                            type: string
-                          description: 'Requests describes the minimum amount of compute
-                            resources required. If Requests is omitted for a container,
-                            it defaults to Limits if that is explicitly specified,
-                            otherwise to an implementation-defined value. More info:
-                            https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
-                          type: object
-                      type: object
-                    tag:
-                      description: Tag describes the tag of Thanos receive controller
-                        to use.
-                      type: string
-                  required:
-                  - image
                   type: object
                 rule:
                   description: Thanos RulerSpec
@@ -468,8 +468,8 @@ spec:
               - objectStoreConfigSecret
               - querier
               - querier-cache
-              - receive
               - receiveController
+              - receivers
               - rule
               - store
               type: object

@@ -32,8 +32,6 @@ type ReceiveController struct {
 	Image *string `json:"image"`
 	// Tag describes the tag of Thanos receive controller to use.
 	Tag *string `json:"tag,omitempty"`
-	// Hashrings describes a list of Hashrings
-	Hashrings []*Hashring `json:"hashrings,omitempty"`
 	// Resources for component pods
 	Resources v1.ResourceRequirements `json:"resources,omitempty"`
 }
@@ -73,10 +71,12 @@ type ThanosSpec struct {
 	Image *string `json:"image"`
 	// Version of Thanos sidecar container image to be deployed.
 	Version *string `json:"version,omitempty"`
+	// Hashrings describes a list of Hashrings
+	Hashrings []*Hashring `json:"hashrings,omitempty"`
 	// Thanos Receive Controller Spec
 	ReceiveControllerSpec ReceiveController `json:"receiveController"`
 	// Thanos ThanosPersistentSpec
-	Receive ThanosPersistentSpec `json:"receive"`
+	Receivers ThanosPersistentSpec `json:"receivers"`
 	// Thanos QuerierSpec
 	Querier ThanosComponentSpec `json:"querier"`
 	// Thanos QuerierCache
