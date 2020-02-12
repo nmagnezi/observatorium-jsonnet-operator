@@ -11,16 +11,7 @@ local config = import 'generic-operator/config';
     key: config.spec.thanos.objectStoreConfigKey,
   },
 
-  hashrings: [
-    {
-      hashring: 'default',
-      tenants: [
-        // Match all for now
-        // 'foo',
-        // 'bar',
-      ],
-    },
-  ],
+  hashrings: config.spec.thanos.hashrings,
 
   compact: {
     image: defaultConfig.thanosImage,
@@ -54,14 +45,7 @@ local config = import 'generic-operator/config';
     hashrings: defaultConfig.hashrings,
     objectStorageConfig: defaultConfig.objectStorageConfig,
     volumeClaimTemplate: {
-      spec: {
-        accessModes: ['ReadWriteOnce'],
-        resources: {
-          requests: {
-            storage: '50Gi',
-          },
-        },
-      },
+      spec:config.spec.thanos.receivers.pvcSpec,
     },
   },
 
@@ -70,7 +54,7 @@ local config = import 'generic-operator/config';
     version: defaultConfig.thanosVersion,
     objectStorageConfig: defaultConfig.objectStorageConfig,
     volumeClaimTemplate: {
-      spec: config.spec.thanos.rule.pvcSpec,,
+      spec: config.spec.thanos.rule.pvcSpec,
     },
   },
 

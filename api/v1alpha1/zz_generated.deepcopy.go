@@ -192,17 +192,6 @@ func (in *ReceiveController) DeepCopyInto(out *ReceiveController) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.Hashrings != nil {
-		in, out := &in.Hashrings, &out.Hashrings
-		*out = make([]*Hashring, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(Hashring)
-				(*in).DeepCopyInto(*out)
-			}
-		}
-	}
 	in.Resources.DeepCopyInto(&out.Resources)
 }
 
@@ -266,8 +255,19 @@ func (in *ThanosSpec) DeepCopyInto(out *ThanosSpec) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Hashrings != nil {
+		in, out := &in.Hashrings, &out.Hashrings
+		*out = make([]*Hashring, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(Hashring)
+				(*in).DeepCopyInto(*out)
+			}
+		}
+	}
 	in.ReceiveControllerSpec.DeepCopyInto(&out.ReceiveControllerSpec)
-	in.Receive.DeepCopyInto(&out.Receive)
+	in.Receivers.DeepCopyInto(&out.Receivers)
 	in.QueryCache.DeepCopyInto(&out.QueryCache)
 	in.Store.DeepCopyInto(&out.Store)
 	in.Compact.DeepCopyInto(&out.Compact)
