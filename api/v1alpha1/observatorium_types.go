@@ -37,6 +37,17 @@ type ThanosPersistentSpec struct {
 	PVCSpec v1.PersistentVolumeClaimSpec `json:"pvcSpec"`
 }
 
+type CompactSpec struct {
+	// PVC Spec
+	PVCSpec v1.PersistentVolumeClaimSpec `json:"pvcSpec"`
+	// RetentionResolutionRaw
+	RetentionResolutionRaw *string `json:"retentionResolutionRaw"`
+	// RetentionResolutionRaw
+	RetentionResolution5m *string `json:"retentionResolution5m"`
+	// RetentionResolutionRaw
+	RetentionResolution1h *string `json:"retentionResolution1h"`
+}
+
 type QuerierCacheSpec struct {
 	// Thanos Querier Cache  name
 	Image *string `json:"image"`
@@ -77,7 +88,7 @@ type ThanosSpec struct {
 	// Thanos StoreSpec
 	Store ThanosPersistentSpec `json:"store"`
 	// Thanos CompactSpec
-	Compact ThanosComponentSpec `json:"compact"`
+	Compact CompactSpec `json:"compact"`
 	// Thanos RulerSpec
 	Rule ThanosComponentSpec `json:"rule"`
 	// Object Store Config Secret for Thanos
