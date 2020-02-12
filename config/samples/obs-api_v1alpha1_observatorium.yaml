@@ -42,14 +42,14 @@ spec:
           requests:
             storage: 50Gi
     compact:
-      replicas: 1
-      resources:
-        limits:
-          cpu: 500m
-          memory: 2Gi
-        requests:
-          cpu: 100m
-          memory: 1Gi
+      retentionResolutionRaw: '14d'
+      retentionResolution5m: '1s'
+      retentionResolution1h: '1s'
+      pvcSpec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 50Gi
     rule:
       pvcSpec:
         accessModes: [ "ReadWriteOnce" ]

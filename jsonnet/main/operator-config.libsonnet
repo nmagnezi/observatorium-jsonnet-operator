@@ -17,18 +17,11 @@ local config = import 'generic-operator/config';
     image: defaultConfig.thanosImage,
     version: defaultConfig.thanosVersion,
     objectStorageConfig: defaultConfig.objectStorageConfig,
-    retentionResolutionRaw: '14d',
-    retentionResolution5m: '1s',
-    retentionResolution1h: '1s',
+    retentionResolutionRaw: config.spec.thanos.compact.retentionResolutionRaw,
+    retentionResolution5m: config.spec.thanos.compact.retentionResolution5m,
+    retentionResolution1h: config.spec.thanos.compact.retentionResolution1h,
     volumeClaimTemplate: {
-      spec: {
-        accessModes: ['ReadWriteOnce'],
-        resources: {
-          requests: {
-            storage: '50Gi',
-          },
-        },
-      },
+      spec: config.spec.thanos.receivers.pvcSpec,
     },
   },
 
