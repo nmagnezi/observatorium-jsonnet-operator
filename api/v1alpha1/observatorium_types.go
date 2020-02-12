@@ -26,14 +26,10 @@ type ObservatoriumSpec struct {
 	Thanos ThanosSpec `json:"thanos"`
 }
 
-type ReceiveController struct {
-	Replicas *int32 `json:"replicas,omitempty"`
-	// Thanos receive controller Image name
+type ReceiveControllerSpec struct {
 	Image *string `json:"image"`
 	// Tag describes the tag of Thanos receive controller to use.
-	Tag *string `json:"tag,omitempty"`
-	// Resources for component pods
-	Resources v1.ResourceRequirements `json:"resources,omitempty"`
+	Version *string `json:"version,omitempty"`
 }
 
 type ThanosPersistentSpec struct {
@@ -71,9 +67,11 @@ type ThanosSpec struct {
 	// Hashrings describes a list of Hashrings
 	Hashrings []*Hashring `json:"hashrings,omitempty"`
 	// Thanos Receive Controller Spec
-	ReceiveControllerSpec ReceiveController `json:"receiveController"`
+	ReceiveController ReceiveControllerSpec `json:"receiveController"`
 	// Thanos ThanosPersistentSpec
 	Receivers ThanosPersistentSpec `json:"receivers"`
+	// Thanos QuerierSpec
+	Querier ThanosComponentSpec `json:"querier"`
 	// Thanos QuerierCache
 	QueryCache QuerierCacheSpec `json:"queryCache"`
 	// Thanos StoreSpec

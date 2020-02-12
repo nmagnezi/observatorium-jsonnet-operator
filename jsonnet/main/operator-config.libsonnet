@@ -34,8 +34,8 @@ local config = import 'generic-operator/config';
 
   thanosReceiveController: {
     local trcConfig = self,
-    version: 'master-2019-10-18-d55fee2',
-    image: 'quay.io/observatorium/thanos-receive-controller:' + trcConfig.version,
+    version: config.spec.thanos.receiveController.version,
+    image: config.spec.thanos.receiveController.image + ':' + trcConfig.version,
     hashrings: defaultConfig.hashrings,
   },
 

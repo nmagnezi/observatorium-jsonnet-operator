@@ -88,28 +88,9 @@ spec:
                 objectStoreConfigSecret:
                   description: Object Store Config Secret for Thanos
                   type: string
-                queryCache:
-                  description: Thanos QuerierCache
+                querier:
+                  description: Thanos QuerierSpec
                   properties:
-                    image:
-                      description: Thanos Querier Cache  name
-                      type: string
-                    replicas:
-                      description: Number of Querier Cache replicas.
-                      format: int32
-                      type: integer
-                    version:
-                      description: Version of  Querier Cache image to be deployed.
-                      type: string
-                  required:
-                  - image
-                  type: object
-                receiveController:
-                  description: Thanos Receive Controller Spec
-                  properties:
-                    image:
-                      description: Thanos receive controller Image name
-                      type: string
                     replicas:
                       format: int32
                       type: integer
@@ -132,7 +113,29 @@ spec:
                             https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
                           type: object
                       type: object
-                    tag:
+                  type: object
+                queryCache:
+                  description: Thanos QuerierCache
+                  properties:
+                    image:
+                      description: Thanos Querier Cache  name
+                      type: string
+                    replicas:
+                      description: Number of Querier Cache replicas.
+                      format: int32
+                      type: integer
+                    version:
+                      description: Version of  Querier Cache image to be deployed.
+                      type: string
+                  required:
+                  - image
+                  type: object
+                receiveController:
+                  description: Thanos Receive Controller Spec
+                  properties:
+                    image:
+                      type: string
+                    version:
                       description: Tag describes the tag of Thanos receive controller
                         to use.
                       type: string
@@ -419,6 +422,7 @@ spec:
               - image
               - objectStoreConfigKey
               - objectStoreConfigSecret
+              - querier
               - queryCache
               - receiveController
               - receivers
