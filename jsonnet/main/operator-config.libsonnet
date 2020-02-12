@@ -67,8 +67,8 @@ local config = import 'generic-operator/config';
 
   queryCache: {
     local qcConfig = self,
-    replicas: 1,
-    version: 'master-8533a216',
-    image: 'quay.io/cortexproject/cortex:' + qcConfig.version,
+    replicas: config.spec.thanos.queryCache.replicas,
+    version: config.spec.thanos.queryCache.version,
+    image: config.spec.thanos.queryCache.image + ':' + qcConfig.version,
   },
 }

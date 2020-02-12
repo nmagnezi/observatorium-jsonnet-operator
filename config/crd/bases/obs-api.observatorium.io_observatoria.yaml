@@ -223,41 +223,20 @@ spec:
                           type: object
                       type: object
                   type: object
-                querier-cache:
+                queryCache:
                   description: Thanos QuerierCache
                   properties:
-                    config-map:
-                      description: ConfigMap describes the Configuration of Querier
-                        Cache.
-                      type: string
                     image:
-                      description: Thanos receive controller Image name
+                      description: Thanos Querier Cache  name
                       type: string
                     replicas:
                       description: Number of Querier Cache replicas.
                       format: int32
                       type: integer
-                    resources:
-                      description: Resources for Receive pods
-                      properties:
-                        limits:
-                          additionalProperties:
-                            type: string
-                          description: 'Limits describes the maximum amount of compute
-                            resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
-                          type: object
-                        requests:
-                          additionalProperties:
-                            type: string
-                          description: 'Requests describes the minimum amount of compute
-                            resources required. If Requests is omitted for a container,
-                            it defaults to Limits if that is explicitly specified,
-                            otherwise to an implementation-defined value. More info:
-                            https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
-                          type: object
-                      type: object
+                    version:
+                      description: Version of  Querier Cache image to be deployed.
+                      type: string
                   required:
-                  - config-map
                   - image
                   type: object
                 receiveController:
@@ -553,7 +532,7 @@ spec:
               - objectStoreConfigKey
               - objectStoreConfigSecret
               - querier
-              - querier-cache
+              - queryCache
               - receiveController
               - receivers
               - rule
