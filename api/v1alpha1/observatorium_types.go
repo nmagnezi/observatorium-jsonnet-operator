@@ -81,8 +81,6 @@ type ThanosSpec struct {
 	ReceiveController ReceiveControllerSpec `json:"receiveController"`
 	// Thanos ThanosPersistentSpec
 	Receivers ThanosPersistentSpec `json:"receivers"`
-	// Thanos QuerierSpec
-	Querier ThanosComponentSpec `json:"querier"`
 	// Thanos QuerierCache
 	QueryCache QuerierCacheSpec `json:"queryCache"`
 	// Thanos StoreSpec
