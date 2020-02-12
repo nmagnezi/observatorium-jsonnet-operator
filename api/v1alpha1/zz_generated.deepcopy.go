@@ -262,7 +262,6 @@ func (in *ThanosSpec) DeepCopyInto(out *ThanosSpec) {
 	}
 	in.ReceiveController.DeepCopyInto(&out.ReceiveController)
 	in.Receivers.DeepCopyInto(&out.Receivers)
-	in.Querier.DeepCopyInto(&out.Querier)
 	in.QueryCache.DeepCopyInto(&out.QueryCache)
 	in.Store.DeepCopyInto(&out.Store)
 	in.Compact.DeepCopyInto(&out.Compact)

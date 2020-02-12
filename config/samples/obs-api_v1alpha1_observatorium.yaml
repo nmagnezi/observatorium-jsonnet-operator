@@ -15,15 +15,6 @@ spec:
           - bar
       - hashring: default
         tenants: []
-    querier:
-      replicas: 3
-      resources:
-        limits:
-          cpu: "1"
-          memory: 1Gi
-        requests:
-          cpu: 100m
-          memory: 256Mi
     queryCache:
       image: quay.io/cortexproject/cortex
       version: master-8533a216
