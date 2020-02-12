@@ -64,11 +64,4 @@ spec:
             storage: 50Gi
     receiveController:
       image: quay.io/observatorium/thanos-receive-controller
-      replicas: 1
-      resources:
-        requests:
-          cpu: 10m
-          memory: 24Mi
-        limits:
-          cpu: 64m
-          memory: 128Mi
+      version: master-2019-10-18-d55fee2
