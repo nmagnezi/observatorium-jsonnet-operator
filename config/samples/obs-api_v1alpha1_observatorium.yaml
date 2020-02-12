@@ -17,17 +17,10 @@ spec:
         requests:
           cpu: 100m
           memory: 256Mi
-    querier-cache:
-      image: quay.io/cortexproject/cortex:master-8533a216
-      config-map: observatorium-cache-conf
-      replicas: 3
-      resources:
-        limits:
-          cpu: "1"
-          memory: 1Gi
-        requests:
-          cpu: 100m
-          memory: 256Mi
+    queryCache:
+      image: quay.io/cortexproject/cortex
+      version: master-8533a216
+      replicas: 1
     store:
       replicas: 1
       resources:
