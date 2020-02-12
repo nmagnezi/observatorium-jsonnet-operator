@@ -288,7 +288,7 @@ spec:
                   required:
                   - image
                   type: object
-                ruler:
+                rule:
                   description: Thanos RulerSpec
                   properties:
                     replicas:
@@ -449,7 +449,7 @@ spec:
               - queryCache
               - receive
               - receiveController
-              - ruler
+              - rule
               - store
               type: object
           required:

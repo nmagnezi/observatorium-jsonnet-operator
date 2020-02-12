@@ -83,7 +83,7 @@ type ThanosSpec struct {
 	// Thanos CompactSpec
 	Compact ThanosComponentSpec `json:"compact"`
 	// Thanos RulerSpec
-	Ruler ThanosComponentSpec `json:"ruler"`
+	Rule ThanosComponentSpec `json:"rule"`
 	// Object Store Config Secret for Thanos
 	ObjectStoreConfigSecret *string `json:"objectStoreConfigSecret"`
 	// Object Store Config key for Thanos

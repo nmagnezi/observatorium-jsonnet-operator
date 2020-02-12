@@ -36,15 +36,12 @@ spec:
         requests:
           cpu: 100m
           memory: 1Gi
-    ruler:
-      replicas: 2
-      resources:
-        limits:
-          cpu: "1"
-          memory: 1Gi
-        requests:
-          cpu: 100m
-          memory: 256Mi
+    rule:
+      pvcSpec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 50Gi
     receive:
       pvcSpec:
         accessModes: [ "ReadWriteOnce" ]
