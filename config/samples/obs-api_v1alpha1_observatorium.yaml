@@ -22,16 +22,11 @@ spec:
       version: master-8533a216
       replicas: 1
     store:
-      replicas: 1
-      resources:
-        requests:
-          cpu: 32m
-          memory: 64Mi
-        limits:
-          cpu: 128m
-          memory: 128Mi
-      storageClass: standard
-      pvcSize: 50Gi
+      pvcSpec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 50Gi
     compact:
       replicas: 1
       resources:
@@ -51,13 +46,11 @@ spec:
           cpu: 100m
           memory: 256Mi
     receive:
-      replicas: 3
-      resources:
-        requests:
-          cpu: 100m
-          memory: 100Mi
-      storageClass: standard
-      pvcSize: 50Gi
+      pvcSpec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 50Gi
     receiveController:
       image: quay.io/observatorium/thanos-receive-controller
       replicas: 1
