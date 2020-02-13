@@ -22,8 +22,33 @@ import (
 
 // ObservatoriumSpec defines the desired state of Observatorium
 type ObservatoriumSpec struct {
-	// Thanos Spec
-	Thanos ThanosSpec `json:"thanos"`
+	// Thanos Image name
+	Image *string `json:"thanosImage"`
+	// Thanos Image version
+	Version *string `json:"thanosVersion"`
+	// Objest Storage Configuration
+	ObjectStorageConfig ObjectStorageConfig `json:"objectStorageConfig"`
+	// Hashrings describes a list of Hashrings
+	Hashrings []*Hashring `json:"hashrings"`
+	// Thanos CompactSpec
+	Compact CompactSpec `json:"compact"`
+	// Thanos Receive Controller Spec
+	ReceiveController ReceiveControllerSpec `json:"thanosReceiveController"`
+	// Thanos ThanosPersistentSpec
+	Receivers ThanosPersistentSpec `json:"receivers"`
+	// Thanos QuerierCache
+	QueryCache QuerierCacheSpec `json:"queryCache"`
+	// Thanos StoreSpec
+	Store ThanosPersistentSpec `json:"store"`
+	// Thanos RulerSpec
+	Rule ThanosPersistentSpec `json:"rule"`
+}
+
+type ObjectStorageConfig struct {
+	// Object Store Config Secret Name for Thanos
+	Name *string `json:"name"`
+	// Object Store Config key for Thanos
+	Key *string `json:"key"`
 }
 
 type ReceiveControllerSpec struct {
@@ -33,19 +58,23 @@ type ReceiveControllerSpec struct {
 }
 
 type ThanosPersistentSpec struct {
-	// PVC Spec
-	PVCSpec v1.PersistentVolumeClaimSpec `json:"pvcSpec"`
+	// VolumeClaimTemplate
+	VolumeClaimTemplate VolumeClaimTemplate `json:"volumeClaimTemplate"`
 }
 
 type CompactSpec struct {
-	// PVC Spec
-	PVCSpec v1.PersistentVolumeClaimSpec `json:"pvcSpec"`
+	// VolumeClaimTemplate
+	VolumeClaimTemplate VolumeClaimTemplate `json:"volumeClaimTemplate"`
 	// RetentionResolutionRaw
 	RetentionResolutionRaw *string `json:"retentionResolutionRaw"`
 	// RetentionResolutionRaw
 	RetentionResolution5m *string `json:"retentionResolution5m"`
 	// RetentionResolutionRaw
 	RetentionResolution1h *string `json:"retentionResolution1h"`
+}
+
+type VolumeClaimTemplate struct {
+	VolumeClaimTemplateSpec v1.PersistentVolumeClaimSpec `json:"spec"`
 }
 
 type QuerierCacheSpec struct {
@@ -68,34 +97,6 @@ type Hashring struct {
 	Hashring *string `json:"hashring"`
 	// Tenants describes a lists of tenants.
 	Tenants []*string `json:"tenants,omitempty"`
-}
-
-type ThanosSpec struct {
-	// Thanos Image name
-	Image *string `json:"image"`
-	// Version of Thanos sidecar container image to be deployed.
-	Version *string `json:"version,omitempty"`
-	// Hashrings describes a list of Hashrings
-	Hashrings []*Hashring `json:"hashrings,omitempty"`
-	// Thanos Receive Controller Spec
-	ReceiveController ReceiveControllerSpec `json:"receiveController"`
-	// Thanos ThanosPersistentSpec
-	Receivers ThanosPersistentSpec `json:"receivers"`
-	// Thanos QuerierCache
-	QueryCache QuerierCacheSpec `json:"queryCache"`
-	// Thanos StoreSpec
-	Store ThanosPersistentSpec `json:"store"`
-	// Thanos CompactSpec
-	Compact CompactSpec `json:"compact"`
-	// Thanos RulerSpec
-	Rule ThanosComponentSpec `json:"rule"`
-	// Object Store Config Secret for Thanos
-	ObjectStoreConfigSecret *string `json:"objectStoreConfigSecret"`
-	// Object Store Config key for Thanos
-	ObjectStoreConfigKey *string `json:"objectStoreConfigKey"`
-	// TODO: AWS secrets?
-	// TODO: Do we need a THANOS_RULER?
-	// TODO: JAEGER
 }
 
 // ObservatoriumStatus defines the observed state of Observatorium
