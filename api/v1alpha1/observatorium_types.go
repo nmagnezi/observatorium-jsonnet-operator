@@ -105,7 +105,7 @@ type ObservatoriumStatus struct {
 }
 
 // +kubebuilder:object:root=true
-
+// +kubebuilder:subresource:status
 // Observatorium is the Schema for the observatoria API
 type Observatorium struct {
 	metav1.TypeMeta   `json:",inline"`
