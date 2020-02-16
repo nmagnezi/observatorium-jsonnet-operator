@@ -12,6 +12,7 @@ cr.spec + {
       objectStorageConfig: objectStorageConfig,
     },
     thanosReceiveController+::{
+       image: cr.spec.thanosReceiveController.image + cr.spec.thanosReceiveController.version,
        hashrings: hashrings,
     },
     receivers+::{
