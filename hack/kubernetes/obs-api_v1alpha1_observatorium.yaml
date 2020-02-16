@@ -1,0 +1,55 @@
+apiVersion: obs-api.observatorium.io/v1alpha1
+kind: Observatorium
+metadata:
+  name: observatorium-sample
+spec:
+  thanosImage: "quay.io/thanos/thanos:"
+  thanosVersion: v0.10.1
+  objectStorageConfig:
+    key: thanos.yaml
+    name: thanos-objectstorage
+  hashrings:
+    - hashring: hashring0
+      tenants:
+        - foo
+        - bar
+    - hashring: default
+      tenants: []
+  queryCache:
+    image: "quay.io/cortexproject/cortex:"
+    version: master-8533a216
+    replicas: 1
+  store:
+    volumeClaimTemplate:
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 50Gi
+  compact:
+    retentionResolutionRaw: '14d'
+    retentionResolution5m: '1s'
+    retentionResolution1h: '1s'
+    volumeClaimTemplate:
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 50Gi
+  rule:
+    volumeClaimTemplate:
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 50Gi
+  receivers:
+    volumeClaimTemplate:
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 50Gi
+  thanosReceiveController:
+    image: "quay.io/observatorium/thanos-receive-controller:"
+    version: master-2019-10-18-d55fee2
