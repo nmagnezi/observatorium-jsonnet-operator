@@ -15,17 +15,15 @@ spec:
         control-plane: controller-manager
     spec:
       containers:
-      - command:
-        - /manager
-        args:
-        - --enable-leader-election
+      - name: manager
         image: quay.io/nmagnezi/observatorium-jsonnet-operator:latest
-        name: manager
+        args:
+          - "--log-level=debug"
         resources:
           limits:
-            cpu: 100m
-            memory: 30Mi
+            cpu: 1
+            memory: 600Mi
           requests:
-            cpu: 100m
-            memory: 20Mi
+            cpu: 1
+            memory: 600Mi
       terminationGracePeriodSeconds: 10
