@@ -4,7 +4,7 @@ metadata:
   name: observatorium-sample
 spec:
   thanosImage: "quay.io/thanos/thanos:"
-  thanosVersion: v0.10.1
+  thanosVersion: master-2020-02-13-adfef4b5
   objectStorageConfig:
     key: thanos.yaml
     name: thanos-objectstorage
