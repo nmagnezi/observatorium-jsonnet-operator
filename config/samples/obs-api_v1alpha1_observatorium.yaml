@@ -9,10 +9,10 @@ spec:
     key: thanos.yaml
     name: thanos-objectstorage
   hashrings:
-    - hashring: hashring0
-      tenants:
-        - foo
-        - bar
+    # - hashring: hashring0
+    #  tenants:
+    #    - foo
+    #    - bar
     - hashring: default
       tenants: []
   queryCache:
@@ -52,4 +52,4 @@ spec:
             storage: 50Gi
   thanosReceiveController:
     image: "quay.io/observatorium/thanos-receive-controller:"
-    version: master-2019-10-18-d55fee2
+    version: master-2020-02-06-b66e0c8
