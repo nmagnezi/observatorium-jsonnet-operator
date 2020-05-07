@@ -1,1 +1,0 @@
-(import 'observatorium.jsonnet').manifests
